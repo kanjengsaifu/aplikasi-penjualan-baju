@@ -3,8 +3,8 @@
   require_once("../../pengaturan/pengaturan.php");
   require_once("../../pengaturan/database.php");
   
-  $judul = "Data Supplier";  
-  $daftar_supplier = $db->query("SELECT * FROM supplier")->fetchAll(PDO::FETCH_ASSOC);
+  $judul = "Data Pengguna";  
+  $daftar_pengguna = $db->query("SELECT * FROM pengguna")->fetchAll(PDO::FETCH_ASSOC);
   
 ?>
 
@@ -30,18 +30,34 @@
                 
                 <!-- Bagian form tambah data -->
                 <form method="POST" id="tambahData" action="proses-tambah.php" style="display: none;">
-                  <input type="hidden" value="" name="kd_supplier" />
+                  <input type="hidden" value="" name="kd_pengguna" />
                   <div class="card">
                     <div class="card-header">
-                      <div class="card-title" id="judulForm">Data Supplier Baru</div>
+                      <div class="card-title" id="judulForm">Data Pengguna Baru</div>
                     </div>
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="nm_supplier">Nama Supplier</label>
-                        <input type="text" class="form-control" name="nm_supplier">
+                        <label for="nm_pengguna">Nama Pengguna</label>
+                        <input type="text" class="form-control" name="nm_pengguna">
                       </div>
                       <div class="form-group">
-                        <label for="nohp">NOHP</label>
+                        <label for="nohp">Username</label>
+                        <input type="text" class="form-control" name="username">
+                      </div>
+                      <div class="form-group">
+                        <label for="alamat">Password</label>
+                        <input type="password" class="form-control" name="password">
+                      </div>
+                      <div class="form-group">
+                        <label for="alamat">Jenis Pengguna</label>
+                        <select name="jenis_pengguna" class="form-control">
+                          <option value="Admin">Admin</option>
+                          <option value="Karyawan Gudang">Karyawan Gudang</option>
+                          <option value="Pimpinan">Pimpinan</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="alamat">NOHP</label>
                         <input type="text" class="form-control" name="nohp">
                       </div>
                       <div class="form-group">
@@ -61,7 +77,7 @@
                 <!-- Bagian tabel -->
                 <div class="card" id="daftarData" style="display: block;">
                   <div class="card-header">
-                    <div class="card-title">Daftar Supplier</div>
+                    <div class="card-title">Daftar Pengguna</div>
                   </div>
                   <div class="card-body">
                     <button type="button" class="btn btn-primary" onclick="showPage()">+ Data Baru</button>
@@ -70,7 +86,9 @@
 												<thead>
                           <tr>
                             <th>No</th>
-                            <th>Nama Supplier</th>
+                            <th>Nama Pengguna</th>
+                            <th>Username</th>
+                            <th>Jenis Pengguna</th>
                             <th>NOHP</th>
                             <th>Alamat</th>
                             <th>Aksi</th>
@@ -79,17 +97,19 @@
                         <tbody>
                           <?php
                             $no = 1;
-                            foreach($daftar_supplier as $i=>$d):
+                            foreach($daftar_pengguna as $i=>$d):
                           ?>
                             <tr>
                               <td><?=$no?></td>
-                              <td><?=$d['nm_supplier']?></td>
+                              <td><?=$d['nm_pengguna']?></td>
+                              <td><?=$d['username']?></td>
+                              <td><?=$d['jenis_pengguna']?></td>
                               <td><?=$d['nohp']?></td>
                               <td><?=$d['alamat']?></td>
                               <td>
                                 <div class="form-group">
                                   <button type="button" class="btn btn-primary" onclick="editPage(<?=$i?>)">Edit</button>
-                                  <a href="proses-hapus.php?kd_supplier=<?=$d['kd_supplier']?>" class="btn btn-danger">Hapus</a>
+                                  <a href="proses-hapus.php?kd_pengguna=<?=$d['kd_pengguna']?>" class="btn btn-danger">Hapus</a>
                                 </div>
                               </td>
                             </tr>
@@ -117,7 +137,7 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
-      var data_detail = <?=json_encode($daftar_supplier)?>;
+      var data_detail = <?=json_encode($daftar_pengguna)?>;
       
       // memmunculkan form tambah data dan daftar data dengan javascript.
       function showPage()
@@ -130,12 +150,14 @@
           daftarData.style.display = 'block';
           
           // Mereset form menjadi form tambah data
-          document.getElementById("judulForm").innerHTML = "Data Supplier Baru";
+          document.getElementById("judulForm").innerHTML = "Data Pengguna Baru";
           document.getElementById('tambahData').action = "proses-tambah.php"; 
-          document.getElementsByName('nm_supplier')[0].value = ""; 
+          document.getElementsByName('nm_pengguna')[0].value = ""; 
+          document.getElementsByName('username')[0].value = ""; 
           document.getElementsByName('alamat')[0].value = ""; 
           document.getElementsByName('nohp')[0].value = ""; 
-          document.getElementsByName('kd_supplier')[0].value = ""; 
+          document.getElementsByName('jenis_pengguna')[0].value = ""; 
+          document.getElementsByName('kd_pengguna')[0].value = ""; 
         }
         else
         {
@@ -150,14 +172,16 @@
         {
           
           // Mengubah form tambah jadi edit
-          document.getElementById("judulForm").innerHTML = "Edit Data Supplier";
+          document.getElementById("judulForm").innerHTML = "Edit Data Pengguna";
           document.getElementById('tambahData').action = "proses-edit.php";
           
           // Memasukkan nilai yang ingin diedit kedalam form
-          document.getElementsByName('nm_supplier')[0].value = data_detail[id].nm_supplier; 
+          document.getElementsByName('nm_pengguna')[0].value = data_detail[id].nm_pengguna; 
+          document.getElementsByName('username')[0].value = data_detail[id].username; 
           document.getElementsByName('alamat')[0].value = data_detail[id].alamat; 
           document.getElementsByName('nohp')[0].value = data_detail[id].nohp; 
-          document.getElementsByName('kd_supplier')[0].value = data_detail[id].kd_supplier; 
+          document.getElementsByName('jenis_pengguna')[0].value = data_detail[id].jenis_pengguna; 
+          document.getElementsByName('kd_pengguna')[0].value = data_detail[id].kd_pengguna; 
         }
       }
       noRowsTable('tabel');

@@ -3,8 +3,8 @@
   require_once("../../pengaturan/pengaturan.php");
   require_once("../../pengaturan/database.php");
   
-  $judul = "Data Supplier";  
-  $daftar_supplier = $db->query("SELECT * FROM supplier")->fetchAll(PDO::FETCH_ASSOC);
+  $judul = "Data Kategori Barang";  
+  $daftar_kategori = $db->query("SELECT * FROM kategori")->fetchAll(PDO::FETCH_ASSOC);
   
 ?>
 
@@ -30,23 +30,15 @@
                 
                 <!-- Bagian form tambah data -->
                 <form method="POST" id="tambahData" action="proses-tambah.php" style="display: none;">
-                  <input type="hidden" value="" name="kd_supplier" />
+                  <input type="hidden" value="" name="kd_kategori" />
                   <div class="card">
                     <div class="card-header">
-                      <div class="card-title" id="judulForm">Data Supplier Baru</div>
+                      <div class="card-title" id="judulForm">Data Kategori Barang Baru</div>
                     </div>
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="nm_supplier">Nama Supplier</label>
-                        <input type="text" class="form-control" name="nm_supplier">
-                      </div>
-                      <div class="form-group">
-                        <label for="nohp">NOHP</label>
-                        <input type="text" class="form-control" name="nohp">
-                      </div>
-                      <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <input type="text" class="form-control" name="alamat">
+                        <label for="nm_kategori">Nama Kategori</label>
+                        <input type="text" class="form-control" name="nm_kategori">
                       </div>
                     </div>
                     <div class="card-action">
@@ -61,7 +53,7 @@
                 <!-- Bagian tabel -->
                 <div class="card" id="daftarData" style="display: block;">
                   <div class="card-header">
-                    <div class="card-title">Daftar Supplier</div>
+                    <div class="card-title">Daftar Kategori Barang</div>
                   </div>
                   <div class="card-body">
                     <button type="button" class="btn btn-primary" onclick="showPage()">+ Data Baru</button>
@@ -70,26 +62,22 @@
 												<thead>
                           <tr>
                             <th>No</th>
-                            <th>Nama Supplier</th>
-                            <th>NOHP</th>
-                            <th>Alamat</th>
+                            <th>Nama Kategori Barang</th>
                             <th>Aksi</th>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
                             $no = 1;
-                            foreach($daftar_supplier as $i=>$d):
+                            foreach($daftar_kategori as $i=>$d):
                           ?>
                             <tr>
                               <td><?=$no?></td>
-                              <td><?=$d['nm_supplier']?></td>
-                              <td><?=$d['nohp']?></td>
-                              <td><?=$d['alamat']?></td>
+                              <td><?=$d['nm_kategori']?></td>
                               <td>
                                 <div class="form-group">
                                   <button type="button" class="btn btn-primary" onclick="editPage(<?=$i?>)">Edit</button>
-                                  <a href="proses-hapus.php?kd_supplier=<?=$d['kd_supplier']?>" class="btn btn-danger">Hapus</a>
+                                  <a href="proses-hapus.php?kd_kategori=<?=$d['kd_kategori']?>" class="btn btn-danger">Hapus</a>
                                 </div>
                               </td>
                             </tr>
@@ -117,7 +105,7 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
-      var data_detail = <?=json_encode($daftar_supplier)?>;
+      var data_detail = <?=json_encode($daftar_kategori)?>;
       
       // memmunculkan form tambah data dan daftar data dengan javascript.
       function showPage()
@@ -132,10 +120,7 @@
           // Mereset form menjadi form tambah data
           document.getElementById("judulForm").innerHTML = "Data Supplier Baru";
           document.getElementById('tambahData').action = "proses-tambah.php"; 
-          document.getElementsByName('nm_supplier')[0].value = ""; 
-          document.getElementsByName('alamat')[0].value = ""; 
-          document.getElementsByName('nohp')[0].value = ""; 
-          document.getElementsByName('kd_supplier')[0].value = ""; 
+          document.getElementsByName('nm_kategori')[0].value = "";
         }
         else
         {
@@ -154,10 +139,8 @@
           document.getElementById('tambahData').action = "proses-edit.php";
           
           // Memasukkan nilai yang ingin diedit kedalam form
-          document.getElementsByName('nm_supplier')[0].value = data_detail[id].nm_supplier; 
-          document.getElementsByName('alamat')[0].value = data_detail[id].alamat; 
-          document.getElementsByName('nohp')[0].value = data_detail[id].nohp; 
-          document.getElementsByName('kd_supplier')[0].value = data_detail[id].kd_supplier; 
+          document.getElementsByName('nm_kategori')[0].value = data_detail[id].nm_kategori;
+          document.getElementsByName('kd_kategori')[0].value = data_detail[id].kd_kategori; 
         }
       }
       noRowsTable('tabel');
