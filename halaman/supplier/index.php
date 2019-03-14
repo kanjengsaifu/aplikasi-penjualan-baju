@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require_once("../../vendor/autoload.php");
   require_once("../../pengaturan/pengaturan.php");
   require_once("../../pengaturan/database.php");

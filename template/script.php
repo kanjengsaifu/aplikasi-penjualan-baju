@@ -11,6 +11,7 @@
 <script src="<?=$alamat_web?>/assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="<?=$alamat_web?>/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="<?=$alamat_web?>/assets/js/ready.min.js"></script>
+<script src="<?=$alamat_web?>/assets/js/selectize.min.js"></script>
 
 <!-- Custom script by user -->
 <script src="<?=$alamat_web?>/assets/js/custom-script.js"></script>

@@ -6,16 +6,27 @@
   
   if($_SERVER['REQUEST_METHOD'] == "POST")
   {
-    $_SESSION['kd_pembelian'] = $_POST['kd_pembelian'];  
-    $_SESSION['tgl_pembelian'] = $_POST['tgl_pembelian'];  
-    $_SESSION['kd_supplier'] = $_POST['kd_supplier'];  
-    $supplier_tmp = $db->query("SELECT nm_supplier FROM supplier WHERE kd_supplier = :kd_supplier", ['kd_supplier' => $_POST['kd_supplier']])->fetch();
-    $_SESSION['nm_supplier'] = $supplier_tmp['nm_supplier'];
+    $_SESSION['kd_penjualan'] = $_POST['kd_penjualan'];  
+    $_SESSION['tgl_penjualan'] = $_POST['tgl_penjualan'];
+    
+    if(is_numeric($_POST['kd_pelanggan']))
+    {
+      $_SESSION['kd_pelanggan'] = $_POST['kd_pelanggan'];  
+      $pelanggan_tmp = $db->query("SELECT nm_pelanggan FROM pelanggan WHERE kd_pelanggan = :kd_pelanggan", ['kd_pelanggan' => $_POST['kd_pelanggan']])->fetch();
+      $_SESSION['nm_pelanggan'] = $pelanggan_tmp['nm_pelanggan'];
+    }
+    else
+    {
+      // tambahkan pelanggan baru
+      $pelanggan_baru = $db->insert("pelanggan", ["nm_pelanggan" => $_POST['kd_pelanggan']]);
+      $_SESSION['kd_pelanggan'] = $db->id();
+      $_SESSION['nm_pelanggan'] = $_POST['kd_pelanggan'];
+    }
   }
   
-  if(isset($_SESSION['kd_pembelian']))
+  if(isset($_SESSION['kd_penjualan']))
   {
-    if($_SESSION['kd_pembelian'] != '')
+    if($_SESSION['kd_penjualan'] != '')
     {
       {
         header("Location: tambah-detail.php");
@@ -24,7 +35,7 @@
   }
   $judul = "Data Pembelian Baru";  
   
-  $daftar_supplier = $db->query("SELECT * FROM supplier")->fetchAll(PDO::FETCH_ASSOC);
+  $daftar_pelanggan = $db->query("SELECT * FROM pelanggan")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <html>
@@ -55,19 +66,18 @@
                   <div class="card-body">
                     <form method="POST" id="tambahData" action="">
                       <div class="form-group">
-                        <label for="kd_pembelian">Kode Pembelian</label>
-                        <input type="text" class="form-control" name="kd_pembelian" max="50" min="1" required />
+                        <label for="kd_penjualan">Kode Pembelian</label>
+                        <input type="text" class="form-control" name="kd_penjualan" max="50" min="1" required />
                       </div>
                       <div class="form-group">
-                        <label for="tgl_supplier">Tanggal Pembelian</label>
-                        <input type="text" class="form-control" name="tgl_pembelian" required />
+                        <label for="tgl_pelanggan">Tanggal Pembelian</label>
+                        <input type="text" class="form-control" name="tgl_penjualan" required />
                       </div>
                       <div class="form-group">
-                        <label for="kd_supplier">Supplier</label>
-                        <select name="kd_supplier" id="kd_supplier" class="form-control">
-                          <option value="">-- Pilih Supplier --</option>
-                          <?php foreach($daftar_supplier as $d): ?>
-                            <option value="<?=$d['kd_supplier']?>"><?=$d['nm_supplier']?></option>
+                        <label for="kd_pelanggan">Pelanggan</label>
+                        <select name="kd_pelanggan" id="kd_pelanggan" class="form-control">
+                          <?php foreach($daftar_pelanggan as $d): ?>
+                            <option value="<?=$d['kd_pelanggan']?>"><?=$d['nm_pelanggan']?></option>
                           <?php endforeach; ?>
                         </select>
                       </div>
@@ -90,7 +100,11 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
-      $('#kd_supplier').selectize({
+      document.getElementsByName("kd_penjualan")[0].value = kodePenjualan();
+      $('#kd_pelanggan').selectize({
+        options: <?=json_encode($daftar_pelanggan)?>,
+        valueField: "kd_pelanggan",
+        labelField: "nm_pelanggan",
         create: true
       });
     </script>

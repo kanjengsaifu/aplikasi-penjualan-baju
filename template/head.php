@@ -5,4 +5,5 @@
   <link rel="stylesheet" href="<?=$alamat_web?>/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?=$alamat_web?>/assets/css/ready.css">
   <link rel="stylesheet" href="<?=$alamat_web?>/assets/css/demo.css">
+  <link rel="stylesheet" href="<?=$alamat_web?>/assets/css/selectize.bt3.css">
 </head>

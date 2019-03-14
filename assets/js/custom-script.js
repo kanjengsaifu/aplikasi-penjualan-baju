@@ -41,3 +41,11 @@ function noRowsTable(id, pesan = "Tidak ada data yang ditampilkan." , tombol = "
     kolomBaru.innerHTML = "<center><b>" + pesan + "</b> <br/> <br/> <a href='index.php' class='btn btn-primary'>" + tombol + "</a></center>";
   }
 }
+
+function kodePenjualan()
+{
+  var waktu = new Date();
+  var hasil = "INV/" + waktu.getDay() + "/" + waktu.getMonth() + "/" + waktu.getFullYear() + "/" + waktu.getHours()+waktu.getMinutes()+waktu.getSeconds()+waktu.getMilliseconds();
+  return hasil;
+}
+      
