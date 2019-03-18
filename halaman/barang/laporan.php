@@ -2,11 +2,12 @@
   session_start();
   require_once("../../vendor/autoload.php");
   require_once("../../pengaturan/pengaturan.php");
-  require_once("../../pengaturan/database.php");
   require_once("../../pengaturan/helper.php");
+  require_once("../../pengaturan/database.php");
   
-  $judul = "Data Pembelian";  
-  $daftar_pembelian = $db->query("SELECT a.*, b.nm_supplier FROM pembelian a JOIN supplier b ON a.kd_supplier = b.kd_supplier")->fetchAll(PDO::FETCH_ASSOC);
+  $judul = "Laporan Barang";  
+  $daftar_barang = $db->query("SELECT a.*, b.nm_kategori FROM barang a JOIN kategori b ON a.kd_kategori = b.kd_kategori")->fetchAll(PDO::FETCH_ASSOC);
+
   
 ?>
 
@@ -33,38 +34,33 @@
                 <!-- Bagian tabel -->
                 <div class="card" id="daftarData" style="display: block;">
                   <div class="card-header">
-                    <div class="card-title">Daftar Pembelian</div>
+                    <div class="card-title">Laporan Barang</div>
                   </div>
                   <div class="card-body">
-                    <a href="tambah.php" class="btn btn-primary">+ Data Baru</a>
                     <div class="table-responsive">
 											<table id="tabel" class="table table-bordered table-head-bg-primary mt-4">
 												<thead>
                           <tr>
                             <th>No</th>
-                            <th>Kode Pembelian</th>
-                            <th>Tanggal Pembelian</th>
-                            <th>Nama Supplier</th>
-                            <th>Total Harga</th>
-                            <th>Aksi</th>
+                            <th>Nama Barang</th>
+                            <th>Harga Beli (Rp)</th>
+                            <th>Harga Jual (Rp)</th>
+                            <th>Stok</th>
+                            <th>Kategori</th>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
                             $no = 1;
-                            foreach($daftar_pembelian as $i=>$d):
+                            foreach($daftar_barang as $i=>$d):
                           ?>
                             <tr>
                               <td><?=$no?></td>
-                              <td><?=$d['kd_pembelian']?></td>
-                              <td><?=tanggal_indo($d['tgl_pembelian'])?></td>
-                              <td><?=$d['nm_supplier']?></td>
-                              <td><?=$d['total_hrg']?></td>
-                              <td>
-                                <div class="form-group">
-                                  <a href="proses-hapus.php?kd_pembelian=<?=$d['kd_pembelian']?>" class="btn btn-danger">Hapus</a>
-                                </div>
-                              </td>
+                              <td><?=$d['nm_barang']?></td>
+                              <td><?=rupiah($d['hrg_beli'], "")?></td>
+                              <td><?=rupiah($d['hrg_jual'], "")?></td>
+                              <td><?=$d['stok']?></td>
+                              <td><?=$d['nm_kategori']?></td>
                             </tr>
                           <?php
                             $no++;
@@ -86,9 +82,7 @@
     
     <!-- semua asset js dibawah ini -->
     <?php include("../../template/script.php") ?>
-    
-    <!-- notifikasi halaman crud ada disini -->
-    <?php include("../../template/notifikasi-crud.php") ?>
+
     <script>
       noRowsTable('tabel');
     </script>

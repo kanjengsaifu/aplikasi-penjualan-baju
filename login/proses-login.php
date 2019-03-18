@@ -16,6 +16,6 @@
     $_SESSION['username'] = $cek_login['username'];
     $_SESSION['nm_pengguna'] = $cek_login['nm_pengguna'];
     $_SESSION['jenis_pengguna'] = $cek_login['jenis_pengguna'];
-    header("Location: ".$alamat_web."/halaman/supplier");
+    header("Location: ".$alamat_web."/halaman/beranda");
   }
 ?>
