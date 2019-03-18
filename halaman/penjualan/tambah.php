@@ -44,6 +44,9 @@
   <?php include("../../template/head.php") ?>
   
   <body>
+    <script src="<?=$alamat_web?>/assets/js/moment.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/moment-id.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/pikaday.js"></script>
     <div class="wrapper">
       
       <!-- Bagian sidebar -->
@@ -100,6 +103,10 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
+      var tgl_penjualan = new Pikaday({
+        field: document.getElementsByName('tgl_penjualan')[0],
+        format: 'YYYY-MM-DD',
+      });
       document.getElementsByName("kd_penjualan")[0].value = kodePenjualan();
       $('#kd_pelanggan').selectize({
         options: <?=json_encode($daftar_pelanggan)?>,

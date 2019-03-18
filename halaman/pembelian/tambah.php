@@ -33,6 +33,9 @@
   <?php include("../../template/head.php") ?>
   
   <body>
+    <script src="<?=$alamat_web?>/assets/js/moment.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/moment-id.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/pikaday.js"></script>
     <div class="wrapper">
       
       <!-- Bagian sidebar -->
@@ -90,6 +93,10 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
+      var tgl_pembelian = new Pikaday({
+        field: document.getElementsByName('tgl_pembelian')[0],
+        format: 'YYYY-MM-DD',
+      });
       $('#kd_supplier').selectize({
         create: true
       });
