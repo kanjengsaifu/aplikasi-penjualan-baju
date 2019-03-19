@@ -45,7 +45,7 @@
                             <th>Nama Barang</th>
                             <th>Harga Beli (Rp)</th>
                             <th>Harga Jual (Rp)</th>
-                            <th>Stok</th>
+                            <th>Stok (Pcs)</th>
                             <th>Kategori</th>
                           </tr>
                         </thead>

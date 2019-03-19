@@ -45,7 +45,7 @@
                             <th>Kode Pembelian</th>
                             <th>Tanggal Pembelian</th>
                             <th>Nama Supplier</th>
-                            <th>Total Harga</th>
+                            <th>Total Harga (Rp)</th>
                             <th>Aksi</th>
                           </tr>
                         </thead>
@@ -59,7 +59,7 @@
                               <td><?=$d['kd_pembelian']?></td>
                               <td><?=tanggal_indo($d['tgl_pembelian'])?></td>
                               <td><?=$d['nm_supplier']?></td>
-                              <td><?=$d['total_hrg']?></td>
+                              <td><?=rupiah($d['total_hrg'], "")?></td>
                               <td>
                                 <div class="form-group">
                                   <a href="proses-hapus.php?kd_pembelian=<?=$d['kd_pembelian']?>" class="btn btn-danger">Hapus</a>

@@ -1,0 +1,39 @@
+.tabel_laporan {
+  font-family: Arial, Helvetica;
+  border: 1px solid #9BC2E6;
+  border-collapse: collapse;
+  width: 100%;
+}
+.tabel_laporan th {
+  font-size: 10pt;
+  border: 1px solid #1D62F0;
+  background-color: #1D62F0;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+.tabel_laporan td {
+  font-size: 8pt;
+  border: 1px solid #D7D7D7;
+  padding: 10px;
+}
+.tabel_laporan .kiri {
+  text-align: left;
+}
+.tabel_laporan .kanan {
+  text-align: right;
+}
+.tabel_laporan .tengah {
+  text-align: center;
+}
+.judul {
+  font-family: Arial, Helvetica;
+  font-size: 17pt;
+  font-weight: bold;
+  text-align: center;
+}
+.sub-judul {
+  font-family: Times New Roman;
+  text-align: center;
+  font-size: 15pt;
+}

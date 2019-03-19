@@ -6,8 +6,13 @@
   require_once("../../pengaturan/helper.php");
   
   $judul = "Laporan Penjualan Barang";  
-  $daftar_penjualan = $db->query("SELECT a.*, b.nm_pelanggan FROM penjualan a JOIN pelanggan b ON a.kd_pelanggan = b.kd_pelanggan")->fetchAll(PDO::FETCH_ASSOC);
+  $waktu = date("Y-m-d");
+  if(isset($_GET['waktu']))
+  {
+    $waktu = $_GET['waktu'];
+  }
   
+  $daftar_penjualan = $db->query("SELECT a.*, b.nm_pelanggan FROM penjualan a JOIN pelanggan b ON a.kd_pelanggan = b.kd_pelanggan WHERE a.tgl_penjualan = DATE(:waktu)", ['waktu' => $waktu])->fetchAll(PDO::FETCH_ASSOC);  
 ?>
 
 <html>
@@ -16,6 +21,9 @@
   <?php include("../../template/head.php") ?>
   
   <body>
+    <script src="<?=$alamat_web?>/assets/js/moment.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/moment-id.js"></script>
+    <script src="<?=$alamat_web?>/assets/js/pikaday.js"></script>
     <div class="wrapper">
       
       <!-- Bagian sidebar -->
@@ -32,10 +40,23 @@
                 
                 <!-- Bagian tabel -->
                 <div class="card" id="daftarData" style="display: block;">
-                  <div class="card-header">
-                    <div class="card-title">Laporan Penjualan Barang</div>
-                  </div>
                   <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12" style="padding-top: 15px;">
+                          <span style="font-weight: bold; font-size: 15pt;">Laporan Penjualan Barang Harian</span>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                          <div class="form-group">
+                            <div class="input-group input-group-sm">
+                              <input class="form-control" type="text" id="waktu" name="waktu" placeholder="Pilih Hari" readonly />
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-info" onclick="tampilkanLaporan()">Tampilkan</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="cetakLaporan()">Cetak</button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     <div class="table-responsive">
 											<table id="tabel" class="table table-bordered table-head-bg-primary mt-4">
 												<thead>
@@ -83,6 +104,28 @@
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
+      <?php
+        if(isset($_GET['waktu']))
+        {
+          echo "document.getElementsByName('waktu')[0].value = '".$_GET['waktu']."';";
+        }
+      ?>
+      
+      
+      var waktu = new Pikaday({
+        field: document.getElementsByName('waktu')[0],
+        format: 'YYYY-MM-DD',
+      });
+      
+      function tampilkanLaporan()
+      {
+        window.location.href = "laporan.php?waktu=" + document.getElementsByName("waktu")[0].value;
+      }
+      function cetakLaporan()
+      {
+        window.open("cetak-laporan-harian.php?waktu=" + document.getElementsByName("waktu")[0].value);
+      }
+      
       noRowsTable('tabel');
     </script>
   </body>
