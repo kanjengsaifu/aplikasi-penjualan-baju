@@ -10,7 +10,7 @@
   require_once("../../pengaturan/database.php");
   
   $judul = "Detail Pembelian";  
-  $daftar_penjualan = $db->query("SELECT a.*, b.nm_barang FROM detail_penjualan_tmp a JOIN barang b ON a.kd_barang = b.kd_barang")->fetchAll(PDO::FETCH_ASSOC);
+  $daftar_penjualan = $db->query("SELECT a.*, b.nm_barang FROM detail_penjualan_tmp a JOIN barang b ON a.kd_barang = b.kd_barang WHERE kd_penjualan = :kd_penjualan", ['kd_penjualan' => $_SESSION['kd_penjualan']])->fetchAll(PDO::FETCH_ASSOC);
   $daftar_barang = $db->query("SELECT * FROM barang")->fetchAll(PDO::FETCH_ASSOC);
   $detail_penjualan = $db->query("SELECT SUM(total_hrg) as total_hrg FROM detail_penjualan_tmp WHERE kd_penjualan = :kd_penjualan", ['kd_penjualan' => $_SESSION['kd_penjualan']])->fetch();
   

@@ -6,11 +6,14 @@
   require_once("../../pengaturan/helper.php");
   
   $judul = "Laporan Pembelian Barang";  
-  $waktu = date("Y-m-d");
   $ket_waktu = "";
+  $waktu = date("Y-m-d");
   if(isset($_GET['waktu']))
   {
-    $waktu = $_GET['waktu'];
+    if(empty($_GET['waktu']) == FALSE)
+    {
+      $waktu = $_GET['waktu'];
+    }
   }
   
   $ket_waktu_tmp = explode(" ", tanggal_indo($waktu));

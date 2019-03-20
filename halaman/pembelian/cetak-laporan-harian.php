@@ -9,7 +9,10 @@
   $waktu = date("Y-m-d");
   if(isset($_GET['waktu']))
   {
-    $waktu = $_GET['waktu'];
+    if(empty($_GET['waktu']) == FALSE)
+    {
+      $waktu = $_GET['waktu'];
+    }
   }
   
   $daftar_pembelian = $db->query("SELECT a.*, b.nm_supplier FROM pembelian a JOIN supplier b ON a.kd_supplier = b.kd_supplier WHERE a.tgl_pembelian = DATE(:waktu)", ['waktu' => $waktu])->fetchAll(PDO::FETCH_ASSOC);
@@ -43,7 +46,9 @@
         <tbody>
           <?php
             $no = 1;
+            $total = 0;
             foreach($daftar_pembelian as $i=>$d):
+              $total += $d['total_hrg'];
           ?>
             <tr>
               <td><?=$no?></td>
@@ -53,9 +58,13 @@
               <td><?=$d['total_hrg']?></td>
             </tr>
           <?php
-            $no++;
+              $no++;
             endforeach;
           ?>
+          <tr>
+            <td class="kanan" colspan="4"><b>Total</b></td>
+            <td><?=$total?></td>
+          </tr>
         </tbody>
       </table>
   </body>
