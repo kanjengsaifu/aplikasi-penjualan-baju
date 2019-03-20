@@ -34,7 +34,16 @@
                 <!-- Bagian tabel -->
                 <div class="card" id="daftarData" style="display: block;">
                   <div class="card-header">
-                    <div class="card-title">Laporan Barang</div>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12" style="padding-top: 15px;">
+                        <span style="font-weight: bold; font-size: 15pt;">Laporan Barang</span>
+                      </div>
+                      <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <a href="cetak-laporan.php" class="btn btn-sm btn-success pull-right" target="_blank">Cetak</a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">

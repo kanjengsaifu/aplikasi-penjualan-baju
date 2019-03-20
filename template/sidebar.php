@@ -20,8 +20,12 @@
     'Pimpinan' => [
       ['judul' => 'Beranda' ,'url' => '/halaman/beranda', 'icon' => 'la-dashboard'],
       ['judul' => 'Laporan Barang' ,'url' => '/halaman/barang/laporan.php', 'icon' => 'la-dashboard'],
-      ['judul' => 'Laporan Pembelian' ,'url' => '/halaman/pembelian/laporan.php', 'icon' => 'la-dashboard'],
-      ['judul' => 'Laporan Penjualan' ,'url' => '/halaman/penjualan/laporan.php', 'icon' => 'la-dashboard']
+      ['judul' => 'Laporan Pembelian Harian' ,'url' => '/halaman/pembelian/laporan.php', 'icon' => 'la-dashboard'],
+      ['judul' => 'Laporan Pembelian Bulanan' ,'url' => '/halaman/pembelian/laporan-bulanan.php', 'icon' => 'la-dashboard'],
+      ['judul' => 'Laporan Pembelian Tahunan' ,'url' => '/halaman/pembelian/laporan-tahunan.php', 'icon' => 'la-dashboard'],
+      ['judul' => 'Laporan Penjualan Harian' ,'url' => '/halaman/penjualan/laporan.php', 'icon' => 'la-dashboard'],
+      ['judul' => 'Laporan Penjualan Bulanan' ,'url' => '/halaman/penjualan/laporan-bulanan.php', 'icon' => 'la-dashboard'],
+      ['judul' => 'Laporan Penjualan Tahunan' ,'url' => '/halaman/penjualan/laporan-tahunan.php', 'icon' => 'la-dashboard']
     ]
   ];
 ?>

@@ -45,7 +45,7 @@
                     <div class="table-responsive">
                       <div class="row">
                         <div class="col-md-6 col-xs-12" style="padding-top: 15px;">
-                          <span style="font-weight: bold; font-size: 15pt;">Laporan Pembelian Barang Harian</span>
+                          <span style="font-weight: bold; font-size: 15pt;">Laporan Pembelian Barang <br> <?=tanggal_indo($waktu)?></span>
                         </div>
                         <div class="col-md-6 col-xs-12">
                           <div class="form-group">
@@ -72,7 +72,9 @@
                         <tbody>
                           <?php
                             $no = 1;
+                            $total = 0;
                             foreach($daftar_pembelian as $i=>$d):
+                              $total += $d['total_hrg'];
                           ?>
                             <tr>
                               <td><?=$no?></td>
@@ -85,6 +87,10 @@
                             $no++;
                             endforeach;
                           ?>
+                            <tr>
+                              <td class="text-right" colspan="4"><b>Total</b></td>
+                              <td><?=rupiah($total, "")?></td>
+                            </tr>
                         </tbody>
 											</table>
                       <!-- Akhir dari Bagian tabel -->

@@ -7,12 +7,16 @@
   
   $judul = "Laporan Penjualan Barang";  
   $waktu = date("Y-m-d");
+  $ket_waktu = "";
   if(isset($_GET['waktu']))
   {
     $waktu = $_GET['waktu'];
   }
   
-  $daftar_penjualan = $db->query("SELECT a.*, b.nm_pelanggan FROM penjualan a JOIN pelanggan b ON a.kd_pelanggan = b.kd_pelanggan WHERE a.tgl_penjualan = DATE(:waktu)", ['waktu' => $waktu])->fetchAll(PDO::FETCH_ASSOC);  
+  $ket_waktu_tmp = explode(" ", tanggal_indo($waktu));
+  $ket_waktu = $ket_waktu_tmp[1]." ".$ket_waktu_tmp[2];
+  
+  $daftar_penjualan = $db->query("SELECT DAY(a.tgl_penjualan) AS tgl, SUM(b.jml) AS jml, SUM(b.total_hrg) AS total_hrg FROM penjualan a JOIN detail_penjualan b ON a.kd_penjualan = b.kd_penjualan WHERE MONTH(a.tgl_penjualan) = MONTH(:waktu) AND YEAR(a.tgl_penjualan) = YEAR(:waktu) GROUP BY DAY(a.tgl_penjualan)", ['waktu' => $waktu])->fetchAll(PDO::FETCH_ASSOC);  
 ?>
 
 <html>
@@ -43,7 +47,7 @@
                   <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 col-xs-12" style="padding-top: 15px;">
-                          <span style="font-weight: bold; font-size: 15pt;">Laporan Penjualan Barang <br/> <?=tanggal_indo($waktu)?></span>
+                          <span style="font-weight: bold; font-size: 15pt;">Laporan Penjualan Barang <br/> <?=$ket_waktu?></span>
                         </div>
                         <div class="col-md-6 col-xs-12">
                           <div class="form-group">
@@ -62,33 +66,34 @@
 												<thead>
                           <tr>
                             <th>No</th>
-                            <th>Kode Penjualan</th>
-                            <th>Tanggal Penjualan</th>
-                            <th>Nama Pelanggan</th>
+                            <th>Tanggal</th>
+                            <th>Jumlah</th>
                             <th>Total Harga (Rp)</th>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
                             $no = 1;
-                            $total = 0;
+                            $jml = 0;
+                            $total_hrg = 0;
                             foreach($daftar_penjualan as $i=>$d):
-                              $total += $d['total_hrg'];
+                              $jml += $d['jml'];
+                              $total_hrg += $d['total_hrg'];
                           ?>
-                            <tr>
-                              <td><?=$no?></td>
-                              <td><?=$d['kd_penjualan']?></td>
-                              <td><?=tanggal_indo($d['tgl_penjualan'])?></td>
-                              <td><?=$d['nm_pelanggan']?></td>
-                              <td><?=rupiah($d['total_hrg'], "")?></td>
-                            </tr>
+                              <tr>
+                                <td><?=$no?></td>
+                                <td><?=$d['tgl']?></td>
+                                <td><?=$d['jml']?></td>
+                                <td><?=rupiah($d['total_hrg'], "")?></td>
+                              </tr>
                           <?php
                             $no++;
                             endforeach;
                           ?>
                           <tr>
-                            <td class="text-right" colspan="4"><b>Total</b></td>
-                            <td><?=rupiah($total, "")?></td>
+                            <td class="text-right" colspan="2"><b>Total</b></td>
+                            <td><?=$jml?></td>
+                            <td><?=rupiah($total_hrg, "")?></td>
                           </tr>
                         </tbody>
 											</table>
@@ -125,11 +130,11 @@
       
       function tampilkanLaporan()
       {
-        window.location.href = "laporan.php?waktu=" + document.getElementsByName("waktu")[0].value;
+        window.location.href = "laporan-bulanan.php?waktu=" + document.getElementsByName("waktu")[0].value;
       }
       function cetakLaporan()
       {
-        window.open("cetak-laporan-harian.php?waktu=" + document.getElementsByName("waktu")[0].value);
+        window.open("cetak-laporan-bulanan.php?waktu=" + document.getElementsByName("waktu")[0].value);
       }
       
       noRowsTable('tabel');
