@@ -33,10 +33,10 @@
   
   <body>
     <div class="judul">
-      <?=$nama_perusahaaan?>
+      <?=$nama_perusahaan?>
     </div>
     <div class="sub-judul">
-      <?=$alamat_perusahaaan?> <hr>
+      <?=$alamat_perusahaan?> <hr>
     </div>
     <div class="sub-judul">
       Laporan Penjualan Bulanan <br/> <?=$ket_waktu?> 

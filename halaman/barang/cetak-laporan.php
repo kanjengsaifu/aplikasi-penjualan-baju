@@ -16,10 +16,10 @@
   </head>
   <body>
     <div class="judul">
-      <?=$nama_perusahaaan?>
+      <?=$nama_perusahaan?>
     </div>
     <div class="sub-judul">
-      <?=$alamat_perusahaaan?>
+      <?=$alamat_perusahaan?>
     </div>
     <table class="tabel_laporan">
       <thead>
