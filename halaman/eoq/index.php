@@ -52,7 +52,7 @@
                           <div class="form-group">
                             <label for="nohp">Nama barang</label>
                             <select name="kd_barang" class="form-control">
-                              <option selected disabled>-- Pilih Barang --</option>
+                              <option value="0" selected disabled>-- Pilih Barang --</option>
                               <?php foreach($data_barang as $d): ?>
                                 <option value="<?=$d['kd_barang']?>"><?=$d['nm_barang']?></option>
                               <?php endforeach; ?>
@@ -182,6 +182,7 @@
     
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
+    <script src="<?=$alamat_web?>/assets/js/axios.min.js"></script>
     <script>
       var tgl_hitung = new Pikaday({
         field: document.getElementsByName('tgl_hitung')[0],
@@ -221,6 +222,7 @@
       function editPage(id)
       {
         showPage();
+        // Mengubah form tambah jadi edit
         if(document.getElementById('tambahData').action = "proses-tambah.php")
         {
           
@@ -238,7 +240,8 @@
           document.getElementsByName('lead_time')[0].value = data_detail[id].lead_time; 
           document.getElementsByName('eoq')[0].value = data_detail[id].eoq; 
           document.getElementsByName('rop')[0].value = data_detail[id].rop; 
-          document.getElementsByName('kd_eoq')[0].value = data_detail[id].kd_eoq; 
+          document.getElementsByName('kd_eoq')[0].value = data_detail[id].kd_eoq;
+          
         }
       }
       function hitungEoqDanRop()
@@ -259,11 +262,31 @@
         }
       }
       
+      // Mengambil jumlah penjualan per tahun berdasarkan tahun dan barang
+      
+      function getBanyakPenjualan(){
+        var kd_barang = document.getElementsByName("kd_barang")[0].value;
+        var tahun_penjualan = document.getElementsByName("tahun_penjualan")[0].value;
+        if(kd_barang != "" && tahun_penjualan != ""){
+          axios.get("get-penjualan-tahun.php?kd_barang=" + kd_barang + "&tahun=" + tahun_penjualan)
+            .then(function(res){
+              document.getElementsByName("jumlah_penjualan")[0].value = res.data.jml;
+            })          
+            .catch(function(err){
+              document.getElementsByName("jumlah_penjualan")[0].value = "0";
+            })          
+        }
+      }
+      
       // Menghitung eoq dan rop saat terjadi perubahan nilai di jumlah penjualan, biaya pesan, biaya simpan dan lead time
       document.getElementsByName('jumlah_penjualan')[0].addEventListener("keyup", hitungEoqDanRop);
       document.getElementsByName('biaya_pesan')[0].addEventListener("keyup", hitungEoqDanRop);
       document.getElementsByName('biaya_simpan')[0].addEventListener("keyup", hitungEoqDanRop);
       document.getElementsByName('lead_time')[0].addEventListener("keyup", hitungEoqDanRop);
+      
+      // Event untuk perubahan barang dan tahun penjualan
+      document.getElementsByName("tahun_penjualan")[0].addEventListener("blur", getBanyakPenjualan)  
+      document.getElementsByName("kd_barang")[0].addEventListener("change", getBanyakPenjualan)  
       
       noRowsTable('tabel');
     </script>
