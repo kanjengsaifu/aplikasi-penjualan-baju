@@ -187,9 +187,6 @@ endforeach;
       
       function hitungHargaBarang(){
         var jml = document.getElementsByName("jml")[0].value;
-        if(jml <= 0){
-          document.getElementsByName("jml")[0].value = "1";
-        }
         if(jml != "" && document.getElementsByName("kd_barang")[0].selectedIndex > 0){
           document.getElementsByName("total_hrg")[0].value = daftar_barang[document.getElementsByName("kd_barang")[0].selectedIndex - 1].hrg_jual * jml;
         }
