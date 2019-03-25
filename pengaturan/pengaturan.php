@@ -26,9 +26,9 @@ $nama_perusahaan = "Maryam Store";
 $kota_perusahaan = "Padang";
 
 // Alamat perusahaan
-$alamat_perusahaan = "Alamat";
+$alamat_perusahaan = "Jln. Rimbo Datar-Kec.Lubuk Kilangan-Bandar Buat-Padang-Sumatera Barat";
 
 // Nama Pimpinan
-$nama_pimpinan = "Pimpinan";
+$nama_pimpinan = "Rahma Hidayati";
 
 ?>
