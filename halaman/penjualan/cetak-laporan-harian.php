@@ -27,7 +27,7 @@
       <?=$nama_perusahaan?>
     </div>
     <div class="sub-judul">
-      <?=$alamat_perusahaan?> <hr>
+      <?=$alamat_perusahaan?> 
     </div>
     <div class="sub-judul">
       Laporan Penjualan Harian <br/> Tanggal <?=tanggal_indo($waktu)?> 
@@ -66,6 +66,9 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 300px;margin-top: 50px;margin-right: -50px; float: right;text-align: center;">
+        <?=$kota_perusahaan?>, <?=date("d/m/Y")?> <br/> <br/> <br/> <br/> <?=$nama_pimpinan?> 
+      </div>
   </body>
 </html>
 <?php

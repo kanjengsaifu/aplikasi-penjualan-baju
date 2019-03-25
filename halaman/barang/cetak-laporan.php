@@ -51,6 +51,9 @@
         ?>
       </tbody>
     </table>
+    <div style="width: 300px;margin-top: 50px;margin-right: -50px; float: right;text-align: center;">
+      <?=$kota_perusahaan?>, <?=date("d/m/Y")?> <br/> <br/> <br/> <br/> <?=$nama_pimpinan?> 
+    </div>
   </body>
 </html>
 <?php

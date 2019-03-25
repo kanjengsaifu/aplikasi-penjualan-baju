@@ -36,7 +36,7 @@
       <?=$nama_perusahaan?>
     </div>
     <div class="sub-judul">
-      <?=$alamat_perusahaan?> <hr>
+      <?=$alamat_perusahaan?> 
     </div>
     <div class="sub-judul">
       Laporan Pembelian Bulanan <br/> <?=$ket_waktu?> 
@@ -78,7 +78,9 @@
       </tbody>
     </table>
     <!-- Akhir dari Bagian tabel -->
-                      
+    <div style="width: 300px;margin-top: 50px;margin-right: -50px; float: right;text-align: center;">
+      <?=$kota_perusahaan?>, <?=date("d/m/Y")?> <br/> <br/> <br/> <br/> <?=$nama_pimpinan?> 
+    </div>
   </body>
 </html>
 <?php

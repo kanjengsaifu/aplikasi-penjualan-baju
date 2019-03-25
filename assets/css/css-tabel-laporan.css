@@ -31,9 +31,11 @@
   font-size: 20pt;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 10px;
 }
 .sub-judul {
   font-family: Times New Roman;
   text-align: center;
-  font-size: 15pt;
+  font-size: 13pt;
+  margin-bottom: 10px;
 }

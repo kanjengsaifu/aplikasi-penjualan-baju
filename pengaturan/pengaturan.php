@@ -23,7 +23,7 @@ $alamat_web = "http://localhost/maryam_store";
 $nama_perusahaan = "Maryam Store";
 
 // Kota perusahaan
-$kota_perusahaan = "Padang";
+$kota_perusahaan = "Bandar Buat";
 
 // Alamat perusahaan
 $alamat_perusahaan = "Jln. Rimbo Datar-Kec.Lubuk Kilangan-Bandar Buat-Padang-Sumatera Barat";
