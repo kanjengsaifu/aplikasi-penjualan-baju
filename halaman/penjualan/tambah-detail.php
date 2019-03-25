@@ -41,14 +41,12 @@
                       <div class="form-group">
                         <label>Pilih Barang</label>
                         <select name="kd_barang" class="form-control">
-                          <?php foreach($daftar_barang as $d): ?>
-                            <option value="<?=$d['kd_barang']?>"><?=$d['nm_barang']?></option>
-                          <?php endforeach; ?>
+                          <!-- Daftar barang dibuat menggunakan javascript -->
                         </select>
                       </div>
                       <div class="form-group">
                         <label>Jumlah</label>
-                        <input type="number" name="jml" class="form-control" />
+                        <input type="number" name="jml" class="form-control" min=1 />
                       </div>
                       <div class="form-group">
                         <label>Total Harga</label>
@@ -179,6 +177,28 @@ endforeach;
     <!-- notifikasi halaman crud ada disini -->
     <?php include("../../template/notifikasi-crud.php") ?>
     <script>
+      var daftar_barang = <?=json_encode($daftar_barang)?>;
+      var list_barang = "<option value='0' selected disabled>-- Pilih Barang --</option>";
+      // Proses pembuatan daftar barang
+      for(var x = 0; x < daftar_barang.length; x++){
+        list_barang += "<option value='" + daftar_barang[x].kd_barang + "'>" + daftar_barang[x].nm_barang + "</option>";
+      }
+      document.getElementsByName("kd_barang")[0].innerHTML = list_barang;
+      
+      function hitungHargaBarang(){
+        var jml = document.getElementsByName("jml")[0].value;
+        if(jml <= 0){
+          document.getElementsByName("jml")[0].value = "1";
+        }
+        if(jml != "" && document.getElementsByName("kd_barang")[0].selectedIndex > 0){
+          document.getElementsByName("total_hrg")[0].value = daftar_barang[document.getElementsByName("kd_barang")[0].selectedIndex - 1].hrg_jual * jml;
+        }
+      }
+      
+      // Event untuk harga barang berganti saat pilih barang
+      document.getElementsByName("kd_barang")[0].addEventListener("change", hitungHargaBarang);
+      document.getElementsByName("jml")[0].addEventListener("keyup", hitungHargaBarang);
+      
       noRowsTable('tabel');
     </script>
   </body>
